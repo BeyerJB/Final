@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-// import Register from "./Register";
 import { Link } from "react-router-dom";
-//import ResponsiveAppBar from './Components/Headerbar';
-// import { useAuth0 } from "@auth0/auth0-react";
 
 const LoginBox = styled.div`
   // margin: 100px;
-
   text-align: center;
   border-radius: 50;
-  border: 2px solid;
+  border: 5px solid rgb(56, 27, 170);
+  //border: 2px solid;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -42,14 +39,6 @@ const InputField = styled.input`
   box-sizing: border-box;
 `;
 
-// const Background = styled.div`
-// background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREfLTJ4M6oQwfGs9waFkLFz1I5UPlNdlj2iJlQip1d-8Ds_h_oRM9DeF_U_XM1Uyn5G68&usqp=CAU');
-// height: 100vh;
-// display: cover;
-// background-size: cover;
-// image-rendering: auto;
-// `;
-
 const Button = styled.button`
   background-color: blue;
   color: white;
@@ -59,22 +48,6 @@ const Button = styled.button`
   cursor: pointer;
   width: 100%;
 `;
-// const Button2 = styled.button`
-// color:blue;
-// background-color: none;
-// border: none;
-// `
-// const Button3 = styled.button`
-// color:blue;
-// background-color: none;
-// border: none;
-// `
-
-// const UserDetails =
-// {
-//   username: "galaxy-traveler",
-//   password: "secret-pass"
-// }
 
 const Login = () => {
   const [userData, setUserData] = useState({ username: "", password: "" });
@@ -109,13 +82,6 @@ const Login = () => {
     setUserData({ ...userData, [name]: value });
   };
 
-  // if (response.status === 201) {
-  //   const data = await response.json();
-  //   setUserData(data);
-  // }else{
-  //   setError('User not found');
-  // }
-
   return (
     <>
       <LoginBox>
@@ -148,10 +114,6 @@ const Login = () => {
           <Button type="submit" onClick={() => console.log("Button Clicked")}>
             Login
           </Button>
-          {/* <Button3 type = "forgot-pw" onClick={() => console.log('Button Clicked')}>Forgot Password</Button3> */}
-          <Link to={"/register"} style={{ color: "white" }}>
-            Click Here to Register
-          </Link>
         </form>
       </LoginBox>
     </>
