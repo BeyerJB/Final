@@ -17,6 +17,7 @@ app.listen(port, () => {
 app.get('/data/items', (request, response) => {
   knex('items')
     .select('*')
+    .orderBy('id', 'asc')
     .then((data) => response.status(200).json(data));
 
 })
@@ -36,6 +37,7 @@ app.put("/data/items", (request, response) => {
   knex("items")
     .where({ id: itemData.id })
     .update({
+      user_id: itemData.user_id,
       item_name: itemData.item_name,
       description: itemData.description,
       qty: itemData.qty
@@ -55,3 +57,67 @@ app.delete("/data/items", (request, response) => {
       response.status(201).json({ status: "Deleted" });
     })
 })
+
+app.post("/data/users", (request, response) => {
+  const { first_name, last_name, username, password} = request.body;
+  knex("users")
+  .insert({ first_name, last_name, username, password})
+  .then(response.status(201).json({ status: "Inserted" }));
+})
+
+app.get('/data/users', (request, response) => {
+  knex('users')
+    .select('*')
+    .orderBy('id', 'asc')
+    .then((data) => response.status(200).json(data));
+})
+
+app.put("/data/users", (request, response) => {
+  let userData = request.body;
+  //console.log("UPDATING WITH INFORMATION: ", userData);
+  knex("users")
+    .where({ id: userData.id })
+    .update({
+      first_name: userData.first_name,
+      last_name: userData.last_name,
+      username: userData.username,
+      password: userData.password
+    })
+    .then(() => {
+      response.status(201).json({ status: "Updated" });
+    })
+});
+// //WARNING, ALSO DELETES ALL ITEMS ASSOSIATED WITH USER
+// app.delete("/data/users", (request, response) => {
+//   let target = request.body.id;
+
+//   knex("items")
+//     .where({ user_id: target })
+//     .delete()
+//     .then(() => {
+//       return knex("users")
+//         .where({ id: target })
+//         .delete();
+//     })
+//     .then(() => {
+//       response.status(201).json({ status: "Deleted" });
+//     })
+//     .catch((error) => {
+//       response.status(500).json({ error: "Error deleting user" });
+//     });
+// });
+
+app.delete("/data/users", (request, response) => {
+  let target = request.body.id;
+
+  knex("users")
+    .where({ id: target })
+    .delete()
+    .then(() => {
+      response.status(201).json({ status: "Deleted" });
+    })
+    .catch((error) => {
+      response.status(500).json({ error: "Error deleting user, items are still tied to their ID" });
+    });
+});
+

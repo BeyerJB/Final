@@ -11,5 +11,7 @@ exports.seed = async function(knex) {
     {first_name: 'john', last_name: 'bob', username: 'jbob', password: 'password'},
     {first_name: 'johnson', last_name: 'bobbert', username: 'jbobbert', password: 'password123'},
     {first_name: 'johnny', last_name: 'rob', username: 'jrob', password: 'passwords'},
+    {first_name: 'nancy', last_name: 'nothing', username: 'nano', password: 'nano123'},
+    {first_name: 'USER', last_name: 'DELETED', username: null, password: null}
   ]);
 };

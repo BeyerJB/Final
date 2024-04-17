@@ -5,8 +5,7 @@
 exports.up = function(knex) {
   return knex.schema.createTable('items', table => {
     table.increments('id');
-    table.integer('user_id');
-    table.foreign('user_id').references(`users.id`)
+    table.integer('user_id').references('id').inTable('users').onDelete('cascade');
     table.string('item_name');
     table.string('description');
     table.integer('qty')
