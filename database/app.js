@@ -1,17 +1,18 @@
 const express = require('express');
 const app = express();
 const port = 8081;
-
+const cors = require("cors");
 const knex = require('knex')(require('./knexfile.js')["development"])
 
+app.use(cors());
 app.use(express.json());
+
+app.listen(port, () => {
+  console.log("KNEX AND EXPRESS LISTENING ON PORT 8081");
+})
 
 app.get('/', (request, response) => {
   response.send('SYSTEM ONLINE');
-})
-
-app.listen(port, () => {
-  console.log("KNEX AND EXPRESS ARE WORKING");
 })
 
 app.get('/data/items', (request, response) => {
@@ -119,5 +120,13 @@ app.delete("/data/users", (request, response) => {
     .catch((error) => {
       response.status(500).json({ error: "Error deleting user, items are still tied to their ID" });
     });
+});
+
+app.post("/data/single_user", (request, response) => {
+  let target = request.body.id;
+  knex("users")
+    .select("first_name", "last_name")
+    .where({id: target})
+    .then((data) => response.status(200).json(data));
 });
 

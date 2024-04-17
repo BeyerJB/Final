@@ -1,0 +1,18 @@
+.itemBox {
+  border: 5px solid rgb(56, 27, 170);
+  max-width: 230px;
+  margin: 10px;
+}
+
+.scrollBox {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start; /* Adjust alignment as needed */
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+/* Adjust width to fit 5 itemBoxes in a row */
+.itemBox {
+  width: calc(20% - 20px); /* 20% width for each itemBox with 10px margin on both sides */
+}
