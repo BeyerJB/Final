@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Link } from 'react-router-dom';
 
 const pages = ['Items', 'Login', 'Register'];
 const settings = ['My Items', 'Logout'];
@@ -86,10 +87,33 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem
+                aria-valuetext={page}
+                key={page}
+                component={Link}
+                to={`/${page.replace(/\s+/g, '').toLowerCase()}`}
+                onClick={() => {
+                  handleCloseNavMenu();
+                }}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
+
+
+              {/* {pages.map((page) => (
+                <MenuItem
+                aria-valuetext={page}
+                key={page}
+                component={Link}
+                to={`/${page.replace(/\s+/g, '').toLowerCase()}`}
+                onClick={() => {
+                  handleCloseNavMenu();
+                }}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))} */}
+
+
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -114,13 +138,32 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
+                data-testid={page}
                 key={page}
+                component={Link}
+                to={`/${page.replace(/\s+/g, '').toLowerCase()}`}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
               </Button>
             ))}
+
+
+            {/* {pages.map((page) => (
+              <Button
+                data-testid={page}
+                key={page}
+                component={Link}
+                to={`/${page.replace(/\s+/g, '').toLowerCase()}`}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {page}
+              </Button>
+            ))} */}
+
+
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
