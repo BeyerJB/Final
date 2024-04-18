@@ -130,3 +130,20 @@ app.post("/data/single_user", (request, response) => {
     .then((data) => response.status(200).json(data));
 });
 
+app.post("/auth/login", (request, response) => {
+  let userData = request.body;
+  console.log("ATTEMPTING VERIFY WITH: ", userData.username);
+    knex("users").select('*').where({username: userData.username})
+    .then(data => {
+        //console.log("RETREIVED DATA: ", data)
+        //console.log("DATABASE PASSWORD: ", data[0].password)
+        //console.log("SUBMITTED PASSWORD: ", userData.password)
+        if (data[0].password === userData.password) {
+          //console.log("USER VERIFIED");
+          response.status(201).json({status: "Authenticated"})
+        }
+    })
+    .catch(err => response.status(500).send(err));
+})
+//jbobbert
+//password123

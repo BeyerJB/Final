@@ -56,7 +56,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/auth/signin", {
+      const response = await fetch("http://localhost:8081/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
@@ -66,7 +66,7 @@ const Login = () => {
         setUserData(data);
         setError(null);
         alert("Login success");
-        window.location.href = "http://localhost:3000/Home";
+        window.location.href = "http://localhost:3000/items";
       } else {
         alert("User not found");
         throw new Error("User not found");
@@ -119,5 +119,7 @@ const Login = () => {
     </>
   );
 };
+//jbobbert
+//password123
 
 export default Login;
