@@ -29,9 +29,10 @@ const ItemPanel = () => {
 
       //console.log(itemsArray[i].item_name);
 
-      if (itemsArray[i].description.length > 100 ) {
-        itemsArray[i].description = itemsArray[i].description.substring(0, 100) + "...";
-    }
+      if (itemsArray[i].description.length > 100) {
+        itemsArray[i].description =
+          itemsArray[i].description.substring(0, 100) + "...";
+      }
 
       let itembox = document.createElement("div");
       itembox.className = "itemBox";
@@ -49,9 +50,9 @@ const ItemPanel = () => {
 
   return (
     <>
-    <h1>All Items</h1>
-  <div className="scrollBox" id="boxLoader"></div>
-  </>
-);
+      <h1>All Items</h1>
+      <div className="scrollBox" id="boxLoader"></div>
+    </>
+  );
 };
 export default ItemPanel;

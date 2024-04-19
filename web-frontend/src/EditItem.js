@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -49,20 +49,55 @@ const Button = styled.button`
   width: 100%;
 `;
 
-const Login = () => {
+const EditItem = () => {
   const [userData, setUserData] = useState({
-    first_name: "",
-    last_name: "",
-    username: "",
-    password: "",
+    id: "",
+    user_id: 0,
+    item_name: "",
+    description: "",
+    qty: "",
   });
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    //GRAB COOKIES AND SPLIT THEM INTO AN ARRAY
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      //FIND USERID
+      if (cookie.startsWith("userid=")) {
+        //REMOVE USERID
+        const userId = cookie.substring("userid=".length);
+        //console.log('USERNAME', userId);
+        //GET NUMERICAL VALUE
+
+        async function getNumericalId() {
+          const response = await fetch("http://localhost:8081/auth/userid", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username: `${userId}` }),
+          });
+          const data = await response.json();
+          //console.log(await data[0].id);
+          setUserData((prevUserData) => ({
+            ...prevUserData,
+            user_id: data[0].id,
+          }));
+        }
+        getNumericalId();
+      } else {
+        alert("YOU MUST LOGIN TO USE THIS PAGE");
+        window.location.href = "http://localhost:3000/allitems";
+      }
+    }
+  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("SENDING: ", userData);
     try {
-      const response = await fetch("http://localhost:8081/data/users", {
-        method: "POST",
+      const response = await fetch("http://localhost:8081/data/items", {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
       });
@@ -70,11 +105,11 @@ const Login = () => {
         const data = await response.json();
         setUserData(data);
         setError(null);
-        alert("Register success");
-        window.location.href = "http://localhost:3000/allitems";
+        alert("Item Edited");
+        window.location.href = "http://localhost:3000/my_items";
       } else {
-        alert("ERROR, CANNOT REGISTER");
-        throw new Error("RegistrationFailure");
+        alert("ERROR, CANNOT EDIT");
+        throw new Error("EDITFailure");
       }
     } catch (error) {
       setError(error.message);
@@ -90,16 +125,16 @@ const Login = () => {
   return (
     <>
       <LoginBox>
-        <Title>Register</Title>
+        <Title>Edit Item</Title>
         <br />
         <form onSubmit={handleSubmit}>
           <div>
             <InputField
-              type="text"
-              placeholder="Enter Username"
-              value={userData.username}
+              type="number"
+              placeholder="Enter Item ID"
+              value={userData.id}
               onChange={(event) =>
-                setUserData({ ...userData, username: event.target.value })
+                setUserData({ ...userData, id: event.target.value })
               }
             />
           </div>
@@ -107,10 +142,10 @@ const Login = () => {
           <div>
             <InputField
               type="text"
-              placeholder="Enter Password"
-              value={userData.password}
+              placeholder="Enter Item Name"
+              value={userData.item_name}
               onChange={(event) =>
-                setUserData({ ...userData, password: event.target.value })
+                setUserData({ ...userData, item_name: event.target.value })
               }
             />
           </div>
@@ -118,26 +153,26 @@ const Login = () => {
           <div>
             <InputField
               type="text"
-              placeholder="Enter First Name"
-              value={userData.first_name}
+              placeholder="Enter Description"
+              value={userData.description}
               onChange={(event) =>
-                setUserData({ ...userData, first_name: event.target.value })
+                setUserData({ ...userData, description: event.target.value })
               }
             />
           </div>
           <br />
           <div>
             <InputField
-              type="text"
-              placeholder="Enter Last Name"
-              value={userData.last_name}
+              type="number"
+              placeholder="Enter Quantity"
+              value={userData.qty}
               onChange={(event) =>
-                setUserData({ ...userData, last_name: event.target.value })
+                setUserData({ ...userData, qty: event.target.value })
               }
             />
           </div>
           <Button type="submit" onClick={() => console.log("Button Clicked")}>
-            Register
+            Add to Inventory
           </Button>
         </form>
       </LoginBox>
@@ -145,4 +180,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default EditItem;

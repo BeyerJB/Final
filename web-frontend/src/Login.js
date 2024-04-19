@@ -93,7 +93,6 @@ const Login = () => {
         <br />
         <form onSubmit={handleSubmit}>
           <div>
-
             <InputField
               type="text"
               placeholder="Enter Username"
@@ -105,7 +104,6 @@ const Login = () => {
           </div>
           <br />
           <div>
-
             <InputField
               type="text"
               placeholder="Enter Password"

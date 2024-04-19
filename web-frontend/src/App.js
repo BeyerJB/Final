@@ -8,6 +8,7 @@ import Register from "./Register.js";
 import AddItem from "./AddItem.js";
 import MyItems from "./MyItems.js";
 import DeleteItem from "./DeleteItem.js";
+import EditItem from "./EditItem.js";
 
 function App() {
   return (
@@ -16,15 +17,16 @@ function App() {
         <Headerbar />
       </div>
       <div>
-          <Routes>
-            <Route path={"/"} element={<ItemPanel />} />
-            <Route path={"/allitems"} element={<ItemPanel />} />
-            <Route path={"/login"} element={<Login />} />
-            <Route path={"/register"} element={<Register />} />
-            <Route path={"/additem"} element={<AddItem />} />
-            <Route path={"/my_items"} element={<MyItems />} />
-            <Route path={"/deleteitem"} element={<DeleteItem />} />
-          </Routes>
+        <Routes>
+          <Route path={"/"} element={<ItemPanel />} />
+          <Route path={"/allitems"} element={<ItemPanel />} />
+          <Route path={"/login"} element={<Login />} />
+          <Route path={"/register"} element={<Register />} />
+          <Route path={"/additem"} element={<AddItem />} />
+          <Route path={"/my_items"} element={<MyItems />} />
+          <Route path={"/deleteitem"} element={<DeleteItem />} />
+          <Route path={"/edititem"} element={<EditItem />} />
+        </Routes>
       </div>
     </>
   );

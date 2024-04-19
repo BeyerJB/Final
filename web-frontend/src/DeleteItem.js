@@ -50,43 +50,41 @@ const Button = styled.button`
 `;
 
 const DeleteItem = () => {
-  const [userData, setUserData] = useState({ item_id: 0});
+  const [userData, setUserData] = useState({ item_id: "" });
   const [error, setError] = useState(null);
 
   useEffect(() => {
-  //GRAB COOKIES AND SPLIT THEM INTO AN ARRAY
-  const cookies = document.cookie.split(';');
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    //FIND USERID
-    if (cookie.startsWith('userid=')) {
-      //REMOVE USERID
-      const userId = cookie.substring('userid='.length);
-      //console.log('USERNAME', userId);
-      //GET NUMERICAL VALUE
+    //GRAB COOKIES AND SPLIT THEM INTO AN ARRAY
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      //FIND USERID
+      if (cookie.startsWith("userid=")) {
+        //REMOVE USERID
+        const userId = cookie.substring("userid=".length);
+        //console.log('USERNAME', userId);
+        //GET NUMERICAL VALUE
 
-      async function getNumericalId(){
-      const response = await fetch("http://localhost:8081/auth/userid", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({"username" :`${userId}`}),
-      });
-      const data = await response.json();
-      //console.log(await data[0].id);
-      setUserData(prevUserData => ({
-        ...prevUserData,
-        user_id: data[0].id
-      }));
+        async function getNumericalId() {
+          const response = await fetch("http://localhost:8081/auth/userid", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username: `${userId}` }),
+          });
+          const data = await response.json();
+          //console.log(await data[0].id);
+          setUserData((prevUserData) => ({
+            ...prevUserData,
+            user_id: data[0].id,
+          }));
+        }
+        getNumericalId();
+      } else {
+        alert("YOU MUST LOGIN TO USE THIS PAGE");
+        window.location.href = "http://localhost:3000/allitems";
+      }
     }
-    getNumericalId();
-
-
-
-
-  } else {alert("YOU MUST LOGIN TO USE THIS PAGE");
-  window.location.href = "http://localhost:3000/allitems";}
-}
-}, []);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -95,7 +93,7 @@ const DeleteItem = () => {
       const response = await fetch("http://localhost:8081/data/items", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({"id" :`${userData.item_id}`}),
+        body: JSON.stringify({ id: `${userData.item_id}` }),
       });
       if (response.status === 201) {
         const data = await response.json();
@@ -125,7 +123,6 @@ const DeleteItem = () => {
         <br />
         <form onSubmit={handleSubmit}>
           <div>
-
             <InputField
               type="number"
               placeholder="Enter Item ID"

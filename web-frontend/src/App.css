@@ -7,14 +7,13 @@
 .scrollBox {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start; /* Adjust alignment as needed */
+  align-items: flex-start;
   margin-left: 200px;
   margin-right: 200px;
 }
 
-/* Adjust width to fit 5 itemBoxes in a row */
 .itemBox {
-  width: calc(20% - 20px); /* 20% width for each itemBox with 10px margin on both sides */
+  width: calc(20% - 20px);
 }
 
 h1 {
