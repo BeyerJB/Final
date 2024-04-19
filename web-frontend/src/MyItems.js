@@ -35,7 +35,7 @@ const MyItems = () => {
     }
     getNumericalId();
   } else {alert("YOU MUST LOGIN TO USE THIS PAGE");
-  window.location.href = "http://localhost:3000/items";}
+  window.location.href = "http://localhost:3000/allitems";}
 }
 }, []);
 

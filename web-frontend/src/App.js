@@ -7,6 +7,7 @@ import ItemPanel from "./ItemPanel";
 import Register from "./Register.js";
 import AddItem from "./AddItem.js";
 import MyItems from "./MyItems.js";
+import DeleteItem from "./DeleteItem.js";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path={"/register"} element={<Register />} />
             <Route path={"/additem"} element={<AddItem />} />
             <Route path={"/my_items"} element={<MyItems />} />
+            <Route path={"/deleteitem"} element={<DeleteItem />} />
           </Routes>
       </div>
     </>

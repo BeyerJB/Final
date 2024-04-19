@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -18,7 +18,7 @@ const LoginBox = styled.div`
 
 const Title = styled.div`
   font-size: 20px;
-  color: black;
+  color: Black;
 `;
 
 const Label = styled.div`
@@ -49,27 +49,63 @@ const Button = styled.button`
   width: 100%;
 `;
 
-const Login = () => {
-  const [userData, setUserData] = useState({ first_name: "", last_name: "", username: "", password: "" });
+const DeleteItem = () => {
+  const [userData, setUserData] = useState({ item_id: 0});
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+  //GRAB COOKIES AND SPLIT THEM INTO AN ARRAY
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    //FIND USERID
+    if (cookie.startsWith('userid=')) {
+      //REMOVE USERID
+      const userId = cookie.substring('userid='.length);
+      //console.log('USERNAME', userId);
+      //GET NUMERICAL VALUE
+
+      async function getNumericalId(){
+      const response = await fetch("http://localhost:8081/auth/userid", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({"username" :`${userId}`}),
+      });
+      const data = await response.json();
+      //console.log(await data[0].id);
+      setUserData(prevUserData => ({
+        ...prevUserData,
+        user_id: data[0].id
+      }));
+    }
+    getNumericalId();
+
+
+
+
+  } else {alert("YOU MUST LOGIN TO USE THIS PAGE");
+  window.location.href = "http://localhost:3000/allitems";}
+}
+}, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("ATTEMPTING DELETE WITH: ", userData.item_id);
     try {
-      const response = await fetch("http://localhost:8081/data/users", {
-        method: "POST",
+      const response = await fetch("http://localhost:8081/data/items", {
+        method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
+        body: JSON.stringify({"id" :`${userData.item_id}`}),
       });
       if (response.status === 201) {
         const data = await response.json();
         setUserData(data);
         setError(null);
-        alert("Register success");
-        window.location.href = "http://localhost:3000/allitems";
+        alert("Item deleted");
+        window.location.href = "http://localhost:3000/my_items";
       } else {
-        alert("ERROR, CANNOT REGISTER");
-        throw new Error("RegistrationFailure");
+        alert("ERROR, CANNOT DELETE");
+        throw new Error("DeleteFailure");
       }
     } catch (error) {
       setError(error.message);
@@ -85,58 +121,23 @@ const Login = () => {
   return (
     <>
       <LoginBox>
-        <Title>Register</Title>
+        <Title>Delete Item</Title>
         <br />
         <form onSubmit={handleSubmit}>
           <div>
 
             <InputField
-              type="text"
-              placeholder="Enter Username"
-              value={userData.username}
+              type="number"
+              placeholder="Enter Item ID"
+              value={userData.item_id}
               onChange={(event) =>
-                setUserData({ ...userData, username: event.target.value })
+                setUserData({ ...userData, item_id: event.target.value })
               }
             />
           </div>
           <br />
-          <div>
-
-            <InputField
-              type="text"
-              placeholder="Enter Password"
-              value={userData.password}
-              onChange={(event) =>
-                setUserData({ ...userData, password: event.target.value })
-              }
-            />
-          </div>
-          <br />
-          <div>
-
-            <InputField
-              type="text"
-              placeholder="Enter First Name"
-              value={userData.first_name}
-              onChange={(event) =>
-                setUserData({ ...userData, first_name: event.target.value })
-              }
-            />
-          </div>
-          <br />
-          <div>
-
-            <InputField
-              type="text"
-              placeholder="Enter Last Name"
-              value={userData.last_name}
-              onChange={(event) =>
-                setUserData({ ...userData, last_name: event.target.value })
-              }
-            />
-          </div>
           <Button type="submit" onClick={() => console.log("Button Clicked")}>
-            Register
+            Delete
           </Button>
         </form>
       </LoginBox>
@@ -144,4 +145,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default DeleteItem;

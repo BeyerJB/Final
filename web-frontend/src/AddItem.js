@@ -18,7 +18,7 @@ const LoginBox = styled.div`
 
 const Title = styled.div`
   font-size: 20px;
-  color: white;
+  color: black;
 `;
 
 const Label = styled.div`
@@ -84,7 +84,7 @@ const AddItem = () => {
 
 
   } else {alert("YOU MUST LOGIN TO USE THIS PAGE");
-  window.location.href = "http://localhost:3000/items";}
+  window.location.href = "http://localhost:3000/allitems";}
 }
 }, []);
 
@@ -125,7 +125,7 @@ const AddItem = () => {
         <br />
         <form onSubmit={handleSubmit}>
           <div>
-            <Label>Item Name</Label>
+
             <InputField
               type="text"
               placeholder="Enter Item Name"
@@ -137,7 +137,7 @@ const AddItem = () => {
           </div>
           <br />
           <div>
-            <Label>Description</Label>
+
             <InputField
               type="text"
               placeholder="Enter Description"
@@ -149,7 +149,7 @@ const AddItem = () => {
           </div>
           <br />
           <div>
-            <Label>Quantity</Label>
+
             <InputField
               type="number"
               placeholder="Enter Quantity"

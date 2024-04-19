@@ -18,7 +18,7 @@ const LoginBox = styled.div`
 
 const Title = styled.div`
   font-size: 20px;
-  color: white;
+  color: Black;
 `;
 
 const Label = styled.div`
@@ -89,11 +89,11 @@ const Login = () => {
   return (
     <>
       <LoginBox>
-        <Title>Login Form</Title>
+        <Title>Login</Title>
         <br />
         <form onSubmit={handleSubmit}>
           <div>
-            <Label>Username</Label>
+
             <InputField
               type="text"
               placeholder="Enter Username"
@@ -105,7 +105,7 @@ const Login = () => {
           </div>
           <br />
           <div>
-            <Label>Password</Label>
+
             <InputField
               type="text"
               placeholder="Enter Password"

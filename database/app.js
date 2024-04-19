@@ -50,7 +50,7 @@ app.put("/data/items", (request, response) => {
 
 app.delete("/data/items", (request, response) => {
   let target = request.body.id;
-  //console.log("DELETING ITEM BY ID: ", target);
+  console.log("DELETING ITEM BY ID: ", target);
   knex("items")
     .where({ id: target })
     .delete()
