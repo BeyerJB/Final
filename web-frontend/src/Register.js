@@ -50,13 +50,13 @@ const Button = styled.button`
 `;
 
 const Login = () => {
-  const [userData, setUserData] = useState({ username: "", password: "" });
+  const [userData, setUserData] = useState({ first_name: "", last_name: "", username: "", password: "" });
   const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:8081/auth/login", {
+      const response = await fetch("http://localhost:8081/data/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
@@ -65,15 +65,11 @@ const Login = () => {
         const data = await response.json();
         setUserData(data);
         setError(null);
-        alert("Login success");
-        document.cookie = `userid=${userData.username}`;
-        let x = document.cookie;
-        console.log("ATTEMPTING TO WRITE COOKIE");
-        console.log("COOKIE: ", x);
+        alert("Register success");
         window.location.href = "http://localhost:3000/items";
       } else {
-        alert("User not found");
-        throw new Error("User not found");
+        alert("ERROR, CANNOT REGISTER");
+        throw new Error("RegistrationFailure");
       }
     } catch (error) {
       setError(error.message);
@@ -115,8 +111,32 @@ const Login = () => {
               }
             />
           </div>
+          <br />
+          <div>
+            <Label>First Name</Label>
+            <InputField
+              type="text"
+              placeholder="Enter First Name"
+              value={userData.first_name}
+              onChange={(event) =>
+                setUserData({ ...userData, first_name: event.target.value })
+              }
+            />
+          </div>
+          <br />
+          <div>
+            <Label>Last Name</Label>
+            <InputField
+              type="text"
+              placeholder="Enter Last Name"
+              value={userData.last_name}
+              onChange={(event) =>
+                setUserData({ ...userData, last_name: event.target.value })
+              }
+            />
+          </div>
           <Button type="submit" onClick={() => console.log("Button Clicked")}>
-            Login
+            Register
           </Button>
         </form>
       </LoginBox>

@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 
-const pages = ['Items', 'Login', 'Register'];
+const pages = ['Items', 'Login', 'Register', 'Add Item'];
 const settings = ['My Items', 'Logout'];
 
 function ResponsiveAppBar() {
@@ -87,17 +87,15 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem
-                aria-valuetext={page}
-                key={page}
-                component={Link}
-                to={`/${page.replace(/\s+/g, '').toLowerCase()}`}
-                onClick={() => {
-                  handleCloseNavMenu();
-                }}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+  <MenuItem
+    aria-valuetext={page}
+    key={page}
+    component={Link}
+    to={`/${page.replace(/\s+/g, '_').toLowerCase()}`}
+    onClick={handleCloseNavMenu}>
+    <Typography textAlign="center">{page}</Typography>
+  </MenuItem>
+))}
 
 
               {/* {pages.map((page) => (

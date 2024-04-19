@@ -145,5 +145,10 @@ app.post("/auth/login", (request, response) => {
     })
     .catch(err => response.status(500).send(err));
 })
-//jbobbert
-//password123
+
+app.post("/auth/userid", (request, response) => {
+  let userData = request.body;
+  //console.log("ATTEMPTING VERIFY WITH: ", userData.username);
+    knex("users").select('id').where({username: userData.username})
+    .then((data) => response.status(200).json(data));
+})
