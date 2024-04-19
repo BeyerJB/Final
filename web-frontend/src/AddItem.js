@@ -54,8 +54,6 @@ const AddItem = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Run! Like go get some data from an API.
-
   //GRAB COOKIES AND SPLIT THEM INTO AN ARRAY
   const cookies = document.cookie.split(';');
   for (let i = 0; i < cookies.length; i++) {
@@ -104,7 +102,7 @@ const AddItem = () => {
         setUserData(data);
         setError(null);
         alert("Item Added");
-        window.location.href = "http://localhost:3000/items";
+        window.location.href = "http://localhost:3000/my_items";
       } else {
         alert("ERROR, CANNOT ADD");
         throw new Error("AddFailure");

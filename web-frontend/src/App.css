@@ -16,3 +16,7 @@
 .itemBox {
   width: calc(20% - 20px); /* 20% width for each itemBox with 10px margin on both sides */
 }
+
+h1 {
+  text-align: center;
+}

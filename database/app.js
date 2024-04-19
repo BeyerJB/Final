@@ -152,3 +152,10 @@ app.post("/auth/userid", (request, response) => {
     knex("users").select('id').where({username: userData.username})
     .then((data) => response.status(200).json(data));
 })
+
+app.post("/data/items/byuser", (request, response) => {
+  let userData = request.body;
+  //console.log("ATTEMPTING VERIFY WITH: ", userData.username);
+    knex("items").select('*').where({user_id: userData.id})
+    .then((data) => response.status(201).json(data));
+})

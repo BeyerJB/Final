@@ -66,7 +66,7 @@ const Login = () => {
         setUserData(data);
         setError(null);
         alert("Register success");
-        window.location.href = "http://localhost:3000/items";
+        window.location.href = "http://localhost:3000/allitems";
       } else {
         alert("ERROR, CANNOT REGISTER");
         throw new Error("RegistrationFailure");

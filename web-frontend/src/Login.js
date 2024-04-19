@@ -70,7 +70,7 @@ const Login = () => {
         let x = document.cookie;
         console.log("ATTEMPTING TO WRITE COOKIE");
         console.log("COOKIE: ", x);
-        window.location.href = "http://localhost:3000/items";
+        window.location.href = "http://localhost:3000/my_items";
       } else {
         alert("User not found");
         throw new Error("User not found");
